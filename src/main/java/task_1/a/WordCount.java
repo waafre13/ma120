@@ -75,24 +75,24 @@ public class WordCount {
         }
     }
 
-    private static class Reduce extends Reducer<Text, IntWritable, Text, LongWritable> {
+    private static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
 
         private int totalWords = 0;
 
         @Override
         protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            long sum = 0;
+            int sum = 0;
             for (IntWritable i : values) {
                 sum += i.get();
             }
             totalWords += sum;
-            context.write(key, new LongWritable(sum));
+            context.write(key, new IntWritable(sum));
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-            Text summary = new Text("\nTotal words: ");
-            LongWritable sum = new LongWritable((long)totalWords);
+            Text summary = new Text("\nTotal amount of words: ");
+            IntWritable sum = new IntWritable(totalWords);
             context.write(summary, sum);
         }
     }

@@ -1,7 +1,7 @@
-package task_1.a;
+package task_1.c;
 
-import common.XmlInputFormat;
 import common.Util;
+import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -17,17 +17,14 @@ import java.io.IOException;
 
 
 /*
-1.a) WordCount. Count the words in the body of questions (note the
-PostTypeId). This is the classic WordCount. The resulting data should
-include counts for each word, that is, how many times each word ap-
-pears in the body of questions.
+1.c) >10. How many questions are there which have more than 10 words
+in their titles?
 
 NOTE TO SELF:
-"PostTypeId" for Q's = 1.
 */
 
 
-public class WordCount {
+public class MoreThan10 {
 
     public static void main(String[] args) throws Exception {
         // Handle log4j exception errors
@@ -35,7 +32,7 @@ public class WordCount {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(WordCount.class);
+        job.setJarByClass(MoreThan10.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
         job.setMapperClass(Map.class);
@@ -59,40 +56,40 @@ public class WordCount {
             String text = value.toString();
 
             // Get value of "Body" and "PostTypeId"
-            String body = Util.getAttrContent("Body", text);
+            String title = Util.getAttrContent("Title", text);
             String postTypeId = Util.getAttrContent("PostTypeId", text);
 
             // Check PostTypeId and if body is not an empty string
-            if(postTypeId.equals("1") && !body.equals("")){
+            if(postTypeId.equals("1") && !title.equals("")){
                 // Simple/lazy wordsplit
-                String[] words = body.split("\\W+");
+                String[] words = title.split("\\W+");
 
-                // Write words to context
-                for (String word : words) {
-                    context.write(new Text(word), new IntWritable(1));
+                // Write title to context if it has more than 10 words in it.
+                if(words.length > 10){
+                    context.write(new Text(title), new IntWritable(1));
                 }
             }
         }
     }
 
-    private static class Reduce extends Reducer<Text, IntWritable, Text, LongWritable> {
+    private static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
 
         private int totalWords = 0;
 
         @Override
         protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            long sum = 0;
+            int sum = 0;
             for (IntWritable i : values) {
                 sum += i.get();
             }
             totalWords += sum;
-            context.write(key, new LongWritable(sum));
+            //context.write(key, new IntWritable(sum));
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-            Text summary = new Text("\nTotal words: ");
-            LongWritable sum = new LongWritable((long)totalWords);
+            Text summary = new Text("\nAmount of question titles that have 10 or more words in it: ");
+            IntWritable sum = new IntWritable(totalWords);
             context.write(summary, sum);
         }
     }

@@ -1,7 +1,7 @@
-package task_1.a;
+package task_1.b;
 
-import common.XmlInputFormat;
 import common.Util;
+import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -17,17 +17,17 @@ import java.io.IOException;
 
 
 /*
-1.a) WordCount. Count the words in the body of questions (note the
-PostTypeId). This is the classic WordCount. The resulting data should
-include counts for each word, that is, how many times each word ap-
-pears in the body of questions.
+1.b) Unique words. Write a Hadoop MapReduce job that outputs words
+in the question titles. The output should contain all words used in the
+title of questions, only once. No count, just the word. That will the
+dictionary over titles of the questions.
 
 NOTE TO SELF:
-"PostTypeId" for Q's = 1.
+
 */
 
 
-public class WordCount {
+public class UniqueWords {
 
     public static void main(String[] args) throws Exception {
         // Handle log4j exception errors
@@ -35,7 +35,7 @@ public class WordCount {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(WordCount.class);
+        job.setJarByClass(UniqueWords.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
         job.setMapperClass(Map.class);
@@ -59,13 +59,13 @@ public class WordCount {
             String text = value.toString();
 
             // Get value of "Body" and "PostTypeId"
-            String body = Util.getAttrContent("Body", text);
+            String title = Util.getAttrContent("Title", text);
             String postTypeId = Util.getAttrContent("PostTypeId", text);
 
             // Check PostTypeId and if body is not an empty string
-            if(postTypeId.equals("1") && !body.equals("")){
+            if(postTypeId.equals("1") && !title.equals("")){
                 // Simple/lazy wordsplit
-                String[] words = body.split("\\W+");
+                String[] words = title.split("\\W+");
 
                 // Write words to context
                 for (String word : words) {
@@ -85,15 +85,16 @@ public class WordCount {
             for (IntWritable i : values) {
                 sum += i.get();
             }
-            totalWords += sum;
+            //totalWords += sum;
+            //TODO: change LongWritable to NullWritable, somehow...
             context.write(key, new LongWritable(sum));
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-            Text summary = new Text("\nTotal words: ");
-            LongWritable sum = new LongWritable((long)totalWords);
-            context.write(summary, sum);
+            //Text summary = new Text("\nTotal words: ");
+            //LongWritable sum = new LongWritable((long)totalWords);
+            //context.write(summary, sum);
         }
     }
 
