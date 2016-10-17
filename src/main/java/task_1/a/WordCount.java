@@ -16,19 +16,37 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.IOException;
 
 
-public class BodyWordCount {
+/*
+1.a) WordCount. Count the words in the body of questions (note the
+PostTypeId). This is the classic WordCount. The resulting data should
+include counts for each word, that is, how many times each word ap-
+pears in the body of questions.
+
+NOTE TO SELF:
+"PostTypeId" for Q's = 1.
+*/
+
+
+public class WordCount {
 
     public static void main(String[] args) throws Exception {
+        // Handle log4j exception errors
         org.apache.log4j.BasicConfigurator.configure();
+
         Job job = Job.getInstance(new Configuration());
-        job.setJarByClass(BodyWordCount.class);
+
+        job.setJarByClass(WordCount.class);
         job.setInputFormatClass(XmlInputFormat.class);
+
         job.setMapperClass(Map.class);
         job.setReducerClass(Reduce.class);
+
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
+
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(LongWritable.class);
+
         FileInputFormat.setInputPaths(job, args[0]);
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
@@ -46,11 +64,13 @@ public class BodyWordCount {
 
             // Check PostTypeId and if body is not an empty string
             if(postTypeId.equals("1") && !body.equals("")){
+                // Simple/lazy wordsplit
                 String[] words = body.split("\\W+");
-                int totalWords = words.length;
 
-                // Writes the body's content and its word count.
-                context.write(new Text(body), new IntWritable(totalWords));
+                // Write words to context
+                for (String word : words) {
+                    context.write(new Text(word), new IntWritable(1));
+                }
             }
         }
     }
@@ -66,12 +86,12 @@ public class BodyWordCount {
                 sum += i.get();
             }
             totalWords += sum;
-            //context.write(key, new LongWritable(sum));
+            context.write(key, new LongWritable(sum));
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-            Text summary = new Text("Total words: ");
+            Text summary = new Text("\nTotal words: ");
             LongWritable sum = new LongWritable((long)totalWords);
             context.write(summary, sum);
         }
