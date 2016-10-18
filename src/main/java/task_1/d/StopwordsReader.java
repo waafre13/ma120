@@ -12,7 +12,8 @@ public class StopwordsReader {
 
     private List<String> stopwords = new ArrayList<String>();
 
-    public StopwordsReader(final String stopwordspath){
+    // Package private
+    StopwordsReader(final String stopwordspath){
         readFile(stopwordspath);
     }
 
@@ -39,7 +40,8 @@ public class StopwordsReader {
         }
     }
 
-    public List<String> getStopwords(){
+    // Package private
+    List<String> getStopwords(){
         return stopwords;
     }
 }

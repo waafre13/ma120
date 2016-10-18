@@ -28,7 +28,7 @@ class StopwordsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
             for (String word : words) {
 
                 // Check if word matches any stopword
-                if (!sr.getStopwords().contains(word)){
+                if (!sr.getStopwords().contains(word.toLowerCase())){
                     context.write(new Text(word), new IntWritable(1));
                 }
             }

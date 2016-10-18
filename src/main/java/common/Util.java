@@ -30,7 +30,11 @@ public class Util {
         Matcher match = pattern.matcher(text);
         content = match.find() ? match.group(2) : "";
 
-        return content;
+        return removeHTMLTags(content);
+    }
+
+    public static String removeHTMLTags(String string){
+        return string.replaceAll("(?i)&(?:[a-z\\d]+|#\\d+|#x[a-f\\d]+);"," ");
     }
 }
 

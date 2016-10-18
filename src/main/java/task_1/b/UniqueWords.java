@@ -31,6 +31,13 @@ NOTE TO SELF:
 public class UniqueWords {
 
     public static void main(String[] args) throws Exception {
+
+        // Check arguments
+        if(args.length != 2){
+            System.out.println("Wrong number of arguments. Use: <class> <input_path> <output_path>");
+            return;
+        }
+
         // Handle log4j exception errors
         org.apache.log4j.BasicConfigurator.configure();
 
@@ -65,6 +72,7 @@ public class UniqueWords {
 
             // Check PostTypeId and if body is not an empty string
             if(postTypeId.equals("1") && !title.equals("")){
+
                 // Simple/lazy wordsplit
                 String[] words = title.split("\\W+");
 
@@ -78,24 +86,11 @@ public class UniqueWords {
 
     private static class Reduce extends Reducer<Text, IntWritable, Text, NullWritable> {
 
-        private int totalWords = 0;
-
         @Override
         protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            int sum = 0;
-            for (IntWritable i : values) {
-                sum += i.get();
-            }
-            //totalWords += sum;
-            //TODO: change LongWritable to NullWritable, somehow...
-            context.write(key, NullWritable.get());
-        }
 
-        @Override
-        protected void cleanup(Context context) throws IOException, InterruptedException {
-            //Text summary = new Text("\nTotal words: ");
-            //LongWritable sum = new LongWritable((long)totalWords);
-            //context.write(summary, sum);
+            // Output only the key
+            context.write(key, NullWritable.get());
         }
     }
 
