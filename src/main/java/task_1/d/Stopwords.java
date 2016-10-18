@@ -32,14 +32,15 @@ public class Stopwords {
     private static String stopwordsPath = "";
 
     public static void main(String[] args) throws Exception {
-        // Handle log4j exception errors
-        org.apache.log4j.BasicConfigurator.configure();
 
         // Check arguments
         if(args.length != 3){
             System.out.println("Wrong number of arguments. Use: <class> <input_path> <output_path> <stopwords_path>");
             return;
         }
+
+        // Handle log4j exception errors
+        org.apache.log4j.BasicConfigurator.configure();
 
         // Initialize stopwords
         stopwordsPath = args[2];

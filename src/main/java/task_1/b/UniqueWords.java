@@ -31,6 +31,13 @@ NOTE TO SELF:
 public class UniqueWords {
 
     public static void main(String[] args) throws Exception {
+
+        // Check arguments
+        if(args.length != 2){
+            System.out.println("Wrong number of arguments. Use: <class> <input_path> <output_path>");
+            return;
+        }
+
         // Handle log4j exception errors
         org.apache.log4j.BasicConfigurator.configure();
 
