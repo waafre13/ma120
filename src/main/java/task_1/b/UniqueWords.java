@@ -6,6 +6,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -75,19 +76,19 @@ public class UniqueWords {
         }
     }
 
-    private static class Reduce extends Reducer<Text, IntWritable, Text, LongWritable> {
+    private static class Reduce extends Reducer<Text, IntWritable, Text, NullWritable> {
 
         private int totalWords = 0;
 
         @Override
         protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            long sum = 0;
+            int sum = 0;
             for (IntWritable i : values) {
                 sum += i.get();
             }
             //totalWords += sum;
             //TODO: change LongWritable to NullWritable, somehow...
-            context.write(key, new LongWritable(sum));
+            context.write(key, NullWritable.get());
         }
 
         @Override
