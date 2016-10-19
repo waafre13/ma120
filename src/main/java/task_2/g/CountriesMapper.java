@@ -1,4 +1,4 @@
-package task_2.b;
+package task_2.g;
 
 import common.Util;
 import org.apache.hadoop.io.IntWritable;
@@ -8,10 +8,14 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-class UniqueUsersMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+class CountriesMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        String text = value.toString();
 
-        context.write(new Text(value), new IntWritable(1));
+        String location = Util.getAttrContent("Location", text);
+
+        context.write(new Text(location), new IntWritable(1));
     }
 }
