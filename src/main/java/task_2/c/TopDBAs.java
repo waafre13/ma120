@@ -1,4 +1,4 @@
-package task_1.f;
+package task_2.c;
 
 import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
@@ -11,14 +11,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-1.f) Tags. Write a MapReduce job that creates a dictionary over the unique
-tags (that is unique tags in the whole dataset).
+2.c) Top DBAs. Write a Hadoop MapReduce job that outputs top 10
+users in terms of their reputation.
 
 Run command:
-hadoop jar ma120/hadoop-xml-reader/target/hadoop-custom_recordreader-1.0-SNAPSHOT.jar task_1.f.Tags stackexchange/Posts.xml task_1f
+
 */
 
-public class Tags {
+public class TopDBAs {
 
     public static void main(String[] args) throws Exception {
 
@@ -33,11 +33,11 @@ public class Tags {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(Tags.class);
+        job.setJarByClass(TopDBAs.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(TagsMapper.class);
-        job.setReducerClass(TagsReducer.class);
+        job.setMapperClass(TopDBAsMapper.class);
+        job.setReducerClass(TopDBAsReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
