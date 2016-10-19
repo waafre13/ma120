@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  */
 public class Util {
 
-    // For multiple attributes at once
+    // Returns attribute content for multiple attributes in an array
     public static String[] getAttrContent(String[] attrNames, String text){
 
         String[] contentList = new String[attrNames.length];
@@ -21,15 +21,16 @@ public class Util {
         return contentList;
     }
 
-    // For single attribute
+    // Returns attribute content for a single attribute
     public static String getAttrContent(String attrName, String text){
 
         String content;
-        String regex = "("+attrName+"=\")([^\"]+)";
+        String regex = "(?:"+attrName+"=\")([^\"]+)";
         Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(text);
-        content = match.find() ? match.group(2) : "";
+        content = match.find() ? match.group(1) : "";
 
+        // Clean the string before return
         return removeHTMLTags(content);
     }
 
