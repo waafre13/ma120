@@ -14,11 +14,13 @@ class TopQuestionsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String text = value.toString();
 
-        int score = Integer.parseInt(Util.getAttrContent("Score", text));
         int postTypeId = Integer.parseInt(Util.getAttrContent("PostTypeId", text));
-        String title = Util.getAttrContent("Title", text);
 
         if(postTypeId == 1){
+            String title = Util.getAttrContent("Title", text);
+
+            //TODO: Check if string is integer first?
+            int score = Integer.parseInt(Util.getAttrContent("Score", text));
             context.write(new Text(title), new IntWritable(score));
         }
     }

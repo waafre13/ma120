@@ -43,7 +43,7 @@ class TopQuestionsReducer extends Reducer<Text, IntWritable, Text, NullWritable>
         for (int i = 0; i < top10Score.length; i++){
             for (int j = 0; j < top10Score.length; j++){
                 if(top10Score[i]> top10Score[j]){
-                    // sort reputation array
+                    // sort score array
                     int tempVal = top10Score[j];
                     top10Score[j] = top10Score[i];
                     top10Score[i] = tempVal;
