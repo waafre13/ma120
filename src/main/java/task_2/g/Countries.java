@@ -11,14 +11,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-2.f) Average answers.Calculate an average number of answers per ques-
-tion. You choose whether you want to user MapReduce or Pig.
+2.g) Countries. Discover users by countries, that is the output should be
+country and the number of users.
 
 Run command:
 
 */
 
-public class AverageAnswers {
+public class Countries {
 
     public static void main(String[] args) throws Exception {
 
@@ -33,11 +33,11 @@ public class AverageAnswers {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(AverageAnswers.class);
+        job.setJarByClass(Countries.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(AverageAnswersMapper.class);
-        job.setReducerClass(AverageAnswersReducer.class);
+        job.setMapperClass(CountriesMapper.class);
+        job.setReducerClass(CountriesReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
