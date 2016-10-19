@@ -59,7 +59,7 @@ class TopDBAsReducer extends Reducer<Text, IntWritable, Text, NullWritable> {
         // Generate string output
         String summary = "";
         for (int i = 0; i < top10DBArep.length; i++) {
-            summary+=(i+1+" - "+top10DBArep[i]+":\t"+top10DBAname[i]+"\n");
+            summary += (top10DBArep[i]+":\t"+top10DBAname[i]+"\n");
         }
         context.write(new Text(summary), NullWritable.get());
     }
