@@ -1,4 +1,4 @@
-package task_1.a;
+package task_4.a;
 
 import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
@@ -10,19 +10,15 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-
 /*
-1.a) Combiner. Count the words in the body of questions (note the
-PostTypeId). This is the classic Combiner. The resulting data should
-include counts for each word, that is, how many times each word ap-
-pears in the body of questions.
+3.a) TitleIndex. The word 'useless' is pretty much useless without any con
+text. Count how many questions contain this word in the body.
 
-NOTE TO SELF:
-"PostTypeId" for Q's = 1.
+Run command:
+
 */
 
-
-public class WordCount {
+public class TitleIndex {
 
     public static void main(String[] args) throws Exception {
 
@@ -37,11 +33,11 @@ public class WordCount {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(WordCount.class);
+        job.setJarByClass(TitleIndex.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(WordCountMapper.class);
-        job.setReducerClass(WordCountReducer.class);
+        job.setMapperClass(TitleIndexMapper.class);
+        job.setReducerClass(TitleIndexReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
@@ -54,5 +50,4 @@ public class WordCount {
 
         job.waitForCompletion(true);
     }
-
 }

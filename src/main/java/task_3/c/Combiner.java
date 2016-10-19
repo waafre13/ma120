@@ -1,4 +1,4 @@
-package task_1.a;
+package task_3.c;
 
 import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
@@ -10,19 +10,16 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-
 /*
-1.a) Combiner. Count the words in the body of questions (note the
-PostTypeId). This is the classic Combiner. The resulting data should
-include counts for each word, that is, how many times each word ap-
-pears in the body of questions.
+1.a) Combiner. In 1a) you created a WordCounter. Add a combiner to it.
+What are implications of having a combiner?
 
 NOTE TO SELF:
-"PostTypeId" for Q's = 1.
+
 */
 
 
-public class WordCount {
+public class Combiner {
 
     public static void main(String[] args) throws Exception {
 
@@ -37,11 +34,12 @@ public class WordCount {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(WordCount.class);
+        job.setJarByClass(Combiner.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(WordCountMapper.class);
-        job.setReducerClass(WordCountReducer.class);
+        job.setMapperClass(CombinerMapper.class);
+        job.setCombinerClass(CombinerCombiner.class);
+        job.setReducerClass(CombinerReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
