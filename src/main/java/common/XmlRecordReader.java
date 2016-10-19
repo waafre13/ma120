@@ -13,7 +13,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-public class XmlRecordReader extends RecordReader<LongWritable, Text> {
+class XmlRecordReader extends RecordReader<LongWritable, Text> {
     private byte[] tagName;
     private byte[] tagNameEnd;
     private long start;
@@ -23,7 +23,8 @@ public class XmlRecordReader extends RecordReader<LongWritable, Text> {
     private Text currentValue;
     private final DataOutputBuffer buffer = new DataOutputBuffer();
 
-    public XmlRecordReader() {
+    // Package private
+    XmlRecordReader() {
         try {
            // this.tagName = ("<student ").getBytes("UTF-8");
            // this.tagNameEnd = ("</student>").getBytes("UTF-8");
