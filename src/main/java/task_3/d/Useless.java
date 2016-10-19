@@ -1,4 +1,4 @@
-package task_3.a;
+package task_3.d;
 
 import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
@@ -11,15 +11,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-3.a) Trigram. A pair of adjacent words is called a bigram. For example, \big
-data" or \fast car" are examples of bigrams. Find the most common
-bigram in the titles of the questions.
+3.a) TitleIndex. The word 'useless' is pretty much useless without any con
+text. Count how many questions contain this word in the body.
 
 Run command:
 
 */
 
-public class Bigram {
+public class Useless {
 
     public static void main(String[] args) throws Exception {
 
@@ -34,11 +33,11 @@ public class Bigram {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(Bigram.class);
+        job.setJarByClass(Useless.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(BigramMapper.class);
-        job.setReducerClass(BigramReducer.class);
+        job.setMapperClass(UselessMapper.class);
+        job.setReducerClass(UselessReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);

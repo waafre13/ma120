@@ -1,4 +1,4 @@
-package task_3.a;
+package task_3.d;
 
 import common.Util;
 import org.apache.hadoop.io.IntWritable;
@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-class BigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+class UselessMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -18,15 +18,10 @@ class BigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
         // Filter questions
         if(postTypeId.equals("1")){
-            String[] words = Util.getAttrContent("Title", text).split("\\s");
+            String title = Util.getAttrContent("Title", text);
 
-            String prevWord = "";
-            for (String word: words) {
-                if(!prevWord.equals("")){
-                    String bigram = prevWord+" "+word;
-                    context.write(new Text(bigram), new IntWritable(1));
-                }
-                prevWord = word;
+            if(title.contains("useless")){
+                context.write(new Text(), new IntWritable(1));
             }
         }
     }
