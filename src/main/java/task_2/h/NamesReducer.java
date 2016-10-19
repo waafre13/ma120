@@ -7,7 +7,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-class FavouriteQuestionsReducer extends Reducer<Text, IntWritable, Text, NullWritable> {
+class NamesReducer extends Reducer<Text, IntWritable, Text, NullWritable> {
 
     private int[] top10Score = new int[10];
     private String[] top10Name = new String[10];

@@ -11,14 +11,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-2.e) Favourite questions. Write a Hadoop MapReduce job that outputs
-top 10 questions in terms of their FavouriteCount.
+2.h) Names. What is the most popular name of a user? List top 10 names.
+Hint: you may want to split the name by space.
 
 Run command:
 
 */
 
-public class FavouriteQuestions {
+public class Names {
 
     public static void main(String[] args) throws Exception {
 
@@ -33,11 +33,11 @@ public class FavouriteQuestions {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(FavouriteQuestions.class);
+        job.setJarByClass(Names.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(FavouriteQuestionsMapper.class);
-        job.setReducerClass(FavouriteQuestionsReducer.class);
+        job.setMapperClass(NamesMapper.class);
+        job.setReducerClass(NamesReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
