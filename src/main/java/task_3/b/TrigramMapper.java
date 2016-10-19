@@ -1,4 +1,4 @@
-package task_3.a;
+package task_3.b;
 
 import common.Util;
 import org.apache.hadoop.io.IntWritable;
@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-class BigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+class TrigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -21,11 +21,13 @@ class BigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
             String[] words = Util.getAttrContent("Title", text).split("\\s");
 
             String prevWord = "";
+            String prevPrevWord = "";
             for (String word: words) {
-                if(!prevWord.equals("")){
-                    String bigram = prevWord+" "+word;
-                    context.write(new Text(bigram), new IntWritable(1));
+                if(!prevWord.equals("") && !prevPrevWord.equals("")){
+                    String trigram = prevPrevWord+" "+prevWord+" "+word;
+                    context.write(new Text(trigram), new IntWritable(1));
                 }
+                prevPrevWord = prevWord;
                 prevWord = word;
             }
         }

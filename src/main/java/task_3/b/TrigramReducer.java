@@ -1,4 +1,4 @@
-package task_3.a;
+package task_3.b;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
@@ -7,7 +7,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-class BigramReducer extends Reducer<Text, IntWritable, Text, NullWritable> {
+class TrigramReducer extends Reducer<Text, IntWritable, Text, NullWritable> {
 
     private int[] top10Score = new int[10];
     private String[] top10Name = new String[10];
