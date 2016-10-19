@@ -1,4 +1,4 @@
-package task_2.e;
+package task_2.f;
 
 import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
@@ -11,17 +11,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-2.d) Top questions. Write a Hadoop MapReduce job that outputs top 10
-questions in terms of their reputation.
-
-Since questions does not have a reputation attribute, we assume that score is what was meant.
-Otherwise it could be reputation of the creator of the question.
+2.f) Average answers.Calculate an average number of answers per ques-
+tion. You choose whether you want to user MapReduce or Pig.
 
 Run command:
 
 */
 
-public class FavouriteQuestions {
+public class AverageAnswers {
 
     public static void main(String[] args) throws Exception {
 
@@ -36,11 +33,11 @@ public class FavouriteQuestions {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(FavouriteQuestions.class);
+        job.setJarByClass(AverageAnswers.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(FavouriteQuestionsMapper.class);
-        job.setReducerClass(FavouriteQuestionsReducer.class);
+        job.setMapperClass(AverageAnswersMapper.class);
+        job.setReducerClass(AverageAnswersReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
