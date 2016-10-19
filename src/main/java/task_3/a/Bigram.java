@@ -11,14 +11,15 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-2.e) Favourite questions. Write a Hadoop MapReduce job that outputs
-top 10 questions in terms of their FavouriteCount.
+3.a) Trigram. A pair of adjacent words is called a bigram. For example, \big
+data" or \fast car" are examples of bigrams. Find the most common
+bigram in the titles of the questions.
 
 Run command:
 
 */
 
-public class FavouriteQuestions {
+public class Bigram {
 
     public static void main(String[] args) throws Exception {
 
@@ -33,11 +34,11 @@ public class FavouriteQuestions {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(FavouriteQuestions.class);
+        job.setJarByClass(Bigram.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(FavouriteQuestionsMapper.class);
-        job.setReducerClass(FavouriteQuestionsReducer.class);
+        job.setMapperClass(BigramMapper.class);
+        job.setReducerClass(BigramReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);

@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-class FavouriteQuestionsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+class BigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -18,12 +18,15 @@ class FavouriteQuestionsMapper extends Mapper<LongWritable, Text, Text, IntWrita
 
         // Filter questions
         if(postTypeId.equals("1")){
-            String title = Util.getAttrContent("Title", text);
-            String count = Util.getAttrContent("FavoriteCount", text);
+            String[] words = Util.getAttrContent("Title", text).split("\\s");
 
-            // Check if count has a valid value (can be converted to an integer)
-            if(Util.isInteger(count)){
-                context.write(new Text(title), new IntWritable(Integer.parseInt(count)));
+            String prevWord = "";
+            for (String word: words) {
+                if(!prevWord.equals("")){
+                    String bigram = prevWord+" "+word;
+                    context.write(new Text(bigram), new IntWritable(1));
+                }
+                prevWord = word;
             }
         }
     }
