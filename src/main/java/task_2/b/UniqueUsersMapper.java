@@ -12,6 +12,6 @@ class UniqueUsersMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
-        context.write(new Text(""), new IntWritable(1));
+        context.write(new Text(value), new IntWritable(1));
     }
 }
