@@ -7,26 +7,23 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-class AverageAnswersReducer extends Reducer<Text, IntWritable, Text, DoubleWritable> {
+class AnswersReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
-    private double totalA = 0;
-    private double totalQ = 0;
+    private int questions = 0;
 
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
         for (IntWritable i : values) {
-            totalA += i.get();
+            questions += i.get();
         }
-        totalQ++;
     }
 
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
 
         // Generate string output
-        String summary = ("Average amount of answers per question is:");
-        double sum = totalA/totalQ;
+        String summary = ("Amount of questions that have at least 1 (one) answer:");
 
-        context.write(new Text(summary), new DoubleWritable(sum));
+        context.write(new Text(summary), new IntWritable(questions));
     }
 }

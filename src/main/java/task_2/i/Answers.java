@@ -11,14 +11,13 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-2.f) Average answers.Calculate an average number of answers per ques-
-tion. You choose whether you want to user MapReduce or Pig.
+2.i) Anwswers. How many questions do have at least one answer?
 
 Run command:
 
 */
 
-public class AverageAnswers {
+public class Answers {
 
     public static void main(String[] args) throws Exception {
 
@@ -33,11 +32,11 @@ public class AverageAnswers {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(AverageAnswers.class);
+        job.setJarByClass(Answers.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(AverageAnswersMapper.class);
-        job.setReducerClass(AverageAnswersReducer.class);
+        job.setMapperClass(AnswersMapper.class);
+        job.setReducerClass(AnswersReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
