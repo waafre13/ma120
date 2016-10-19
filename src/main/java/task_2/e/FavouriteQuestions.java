@@ -1,4 +1,4 @@
-package task_2.d;
+package task_2.e;
 
 import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
@@ -21,7 +21,7 @@ Run command:
 
 */
 
-public class TopQuestions {
+public class FavouriteQuestions {
 
     public static void main(String[] args) throws Exception {
 
@@ -36,11 +36,11 @@ public class TopQuestions {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(TopQuestions.class);
+        job.setJarByClass(FavouriteQuestions.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(TopQuestionsMapper.class);
-        job.setReducerClass(TopQuestionsReducer.class);
+        job.setMapperClass(FavouriteQuestionsMapper.class);
+        job.setReducerClass(FavouriteQuestionsReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
