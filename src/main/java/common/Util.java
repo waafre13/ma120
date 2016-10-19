@@ -27,10 +27,7 @@ public class Util {
         String regex = "(?:"+attrName+"=\")([^\"]+)";
         Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(text);
-        content = match.find() ? match.group(1) : "";
-
-        // Clean the string before return
-        return removeHTMLTags(content);
+        return match.find() ? removeHTMLTags(match.group(1)) : "";
     }
 
     public static String removeHTMLTags(String string){
