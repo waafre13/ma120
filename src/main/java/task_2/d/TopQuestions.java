@@ -11,14 +11,17 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-2.c) Top DBAs. Write a Hadoop MapReduce job that outputs top 10
-users in terms of their reputation.
+2.d) Top questions. Write a Hadoop MapReduce job that outputs top 10
+questions in terms of their reputation.
+
+Since questions does not have a reputation attribute, we assume that score is what was meant.
+Otherwise it could be reputation of the creator of the question.
 
 Run command:
 
 */
 
-public class TopDBAs {
+public class TopQuestions {
 
     public static void main(String[] args) throws Exception {
 
@@ -33,11 +36,11 @@ public class TopDBAs {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(TopDBAs.class);
+        job.setJarByClass(TopQuestions.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(TopDBAsMapper.class);
-        job.setReducerClass(TopDBAsReducer.class);
+        job.setMapperClass(TopQuestionsMapper.class);
+        job.setReducerClass(TopQuestionsReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);

@@ -8,15 +8,18 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-class TopDBAsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+class TopQuestionsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String text = value.toString();
 
-        int rep = Integer.parseInt(Util.getAttrContent("Reputation", text));
-        String name = Util.getAttrContent("DisplayName", text);
+        int score = Integer.parseInt(Util.getAttrContent("Score", text));
+        int postTypeId = Integer.parseInt(Util.getAttrContent("PostTypeId", text));
+        String title = Util.getAttrContent("Title", text);
 
-        context.write(new Text(name), new IntWritable(rep));
+        if(postTypeId == 1){
+            context.write(new Text(title), new IntWritable(score));
+        }
     }
 }
