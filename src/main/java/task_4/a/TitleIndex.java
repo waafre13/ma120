@@ -1,4 +1,4 @@
-package task_3.d;
+package task_4.a;
 
 import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
@@ -11,14 +11,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-3.a) Useless. The word 'useless' is pretty much useless without any con
+3.a) TitleIndex. The word 'useless' is pretty much useless without any con
 text. Count how many questions contain this word in the body.
 
 Run command:
 
 */
 
-public class Useless {
+public class TitleIndex {
 
     public static void main(String[] args) throws Exception {
 
@@ -33,11 +33,11 @@ public class Useless {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(Useless.class);
+        job.setJarByClass(TitleIndex.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(UselessMapper.class);
-        job.setReducerClass(UselessReducer.class);
+        job.setMapperClass(TitleIndexMapper.class);
+        job.setReducerClass(TitleIndexReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
