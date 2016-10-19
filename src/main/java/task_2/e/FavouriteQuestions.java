@@ -11,11 +11,8 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-2.d) Top questions. Write a Hadoop MapReduce job that outputs top 10
-questions in terms of their reputation.
-
-Since questions does not have a reputation attribute, we assume that score is what was meant.
-Otherwise it could be reputation of the creator of the question.
+2.e) Favourite questions. Write a Hadoop MapReduce job that outputs
+top 10 questions in terms of their FavouriteCount.
 
 Run command:
 
