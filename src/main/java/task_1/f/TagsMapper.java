@@ -22,7 +22,7 @@ class TagsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         // Check if tags is not an empty string
         if(!tags.equals("")){
 
-            String[] words = tags.split("\\W+");
+            String[] words = tags.split("\\s+");
 
             // Write words to context
             for (String word : words) {

@@ -20,7 +20,7 @@ class CombinerMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         // Check PostTypeId and if body is not an empty string
         if (postTypeId.equals("1") && !body.equals("")) {
             // Simple/lazy wordsplit
-            String[] words = body.split("\\W+");
+            String[] words = body.split("\\s+");
 
             // Write words to context
             for (String word : words) {

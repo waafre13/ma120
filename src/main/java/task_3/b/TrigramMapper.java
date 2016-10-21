@@ -18,7 +18,7 @@ class TrigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
         // Filter questions
         if(postTypeId.equals("1")){
-            String[] words = Util.getAttrContent("Title", text).split("\\s");
+            String[] words = Util.getAttrContent("Title", text).split("\\s+");
 
             String prevWord = "";
             String prevPrevWord = "";
