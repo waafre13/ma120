@@ -14,7 +14,7 @@ class StopwordsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         String text = value.toString();
 
         // Get value of "Body" and "PostTypeId"
-        String body = Util.getAttrContent("Body", text);
+        String body = Util.getAttrContent("Title", text);
         String postTypeId = Util.getAttrContent("PostTypeId", text);
 
         // Check PostTypeId and if body is not an empty string
@@ -22,7 +22,7 @@ class StopwordsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
             StopwordsReader sr = new StopwordsReader(Stopwords.getStopwordsPath());
 
-            String[] words = body.split("\\W+");
+            String[] words = body.split("\\s+");
 
             // Write words to context
             for (String word : words) {
