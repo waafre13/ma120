@@ -31,9 +31,9 @@ public class Util {
         if(match.find()){
             String string = match.group(1);
             if(removeTagContent){
-                string.replaceAll("(?:&lt;)([^&gt;])*", "");
+                string.replaceAll("(?:&lt;)([^&gt;])*", "");            // Content of HTML tags) : "";
             }
-            return cleanString(string);                // Content of HTML tags) : "";
+            return cleanString(string);
         } else{
             return "";
         }
