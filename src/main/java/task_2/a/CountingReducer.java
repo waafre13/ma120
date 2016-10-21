@@ -6,17 +6,13 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-class UniqueUsersReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+class CountingReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
     private int totalUniqueUsers = 0;
 
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-        //totalUniqueUsers++;
-        for (IntWritable value :
-                values) {
-            totalUniqueUsers += value.get();
-        }
+        totalUniqueUsers++;
     }
 
     @Override

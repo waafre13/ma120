@@ -16,7 +16,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 users in the dataset.
 
 -----
-hadoop jar ma120/hadoop-xml-reader/target/hadoop-custom_recordreader-1.0-SNAPSHOT.jar task_2.a.UniqueUsers stackexchange/Users.xml task_2b
+hadoop jar ma120/hadoop-xml-reader/target/hadoop-custom_recordreader-1.0-SNAPSHOT.jar task_2.a.Counting stackexchange/Users.xml task_2b
 =====
 Amount of unique users: 	83317
 -----
@@ -24,7 +24,7 @@ Amount of unique users: 	83317
 */
 
 
-public class UniqueUsers {
+public class Counting {
 
     public static void main(String[] args) throws Exception {
 
@@ -39,11 +39,11 @@ public class UniqueUsers {
 
         Job job = Job.getInstance(new Configuration());
 
-        job.setJarByClass(UniqueUsers.class);
+        job.setJarByClass(Counting.class);
         job.setInputFormatClass(XmlInputFormat.class);
 
-        job.setMapperClass(UniqueUsersMapper.class);
-        job.setReducerClass(UniqueUsersReducer.class);
+        job.setMapperClass(CountingMapper.class);
+        job.setReducerClass(CountingReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
