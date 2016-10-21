@@ -29,7 +29,7 @@ class StopwordsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
                 // Check if word matches any stopword
                 if (!sr.getStopwords().contains(word.toLowerCase())){
-                    context.write(new Text(word), new IntWritable(1));
+                    context.write(new Text(word.toLowerCase()), new IntWritable(1));
                 }
             }
         }
