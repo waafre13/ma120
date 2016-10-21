@@ -20,7 +20,7 @@ class UselessMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         if(postTypeId.equals("1")){
             String title = Util.getAttrContent("Title", text);
 
-            if(title.contains("useless")){
+            if(title.toLowerCase().contains("useless")){
                 context.write(new Text(), new IntWritable(1));
             }
         }
