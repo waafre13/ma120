@@ -12,8 +12,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 
 /*
-1.a) Combiner. Count the words in the body of questions (note the
-PostTypeId). This is the classic Combiner. The resulting data should
+1.a) Wordcount. Count the words in the body of questions (note the
+PostTypeId). This is the classic Wordcount. The resulting data should
 include counts for each word, that is, how many times each word ap-
 pears in the body of questions.
 
