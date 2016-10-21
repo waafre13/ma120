@@ -18,9 +18,9 @@ class UselessMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
         // Filter questions
         if(postTypeId.equals("1")){
-            String title = Util.getAttrContent("Title", text);
+            String body = Util.getAttrContent("Body", text);
 
-            if(title.toLowerCase().contains("useless")){
+            if(body.toLowerCase().contains("useless")){
                 context.write(new Text(), new IntWritable(1));
             }
         }
