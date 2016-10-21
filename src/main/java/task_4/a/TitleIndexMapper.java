@@ -18,7 +18,7 @@ class TitleIndexMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         int id = Util.isInteger(rowId) ? Integer.parseInt(rowId) : -1;
 
         for (String word : words) {
-            context.write(new Text(word), new IntWritable(id));
+            context.write(new Text(word.toLowerCase()), new IntWritable(id));
         }
     }
 }
