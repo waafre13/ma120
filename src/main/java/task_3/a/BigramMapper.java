@@ -24,7 +24,7 @@ class BigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
             for (String word: words) {
                 if(!prevWord.equals("")){
                     String bigram = prevWord+" "+word;
-                    context.write(new Text(bigram), new IntWritable(1));
+                    context.write(new Text(bigram.toLowerCase()), new IntWritable(1));
                 }
                 prevWord = word;
             }

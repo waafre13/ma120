@@ -25,7 +25,7 @@ class TrigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
             for (String word: words) {
                 if(!prevWord.equals("") && !prevPrevWord.equals("")){
                     String trigram = prevPrevWord+" "+prevWord+" "+word;
-                    context.write(new Text(trigram), new IntWritable(1));
+                    context.write(new Text(trigram.toLowerCase()), new IntWritable(1));
                 }
                 prevPrevWord = prevWord;
                 prevWord = word;
