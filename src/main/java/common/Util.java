@@ -23,23 +23,34 @@ public class Util {
 
     // Returns attribute content for a single attribute
     public static String getAttrContent(String attrName, String text){
+        return getAttrContent(attrName, text, false);
+    }
+
+    public static String getAttrContent(String attrName, String text, Boolean removeTagContent){
 
         String regex = "(?:"+attrName+"=\")([^\"]+)";
         Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(text);
-        return match.find() ? removeHTMLTags(match.group(1)) : "";
+        if(match.find()){
+            String string = match.group(1);
+            if(removeTagContent){
+                string.replaceAll("(?:&lt;)([^&gt;])*", "");
+            }
+            return removeHTMLTags(string);                // Content of HTML tags) : "";
+        } else{
+            return "";
+        }
     }
 
     public static String removeHTMLTags(String string){
         return string
                 .replaceAll("(?=[^\\d])?(\\.)(?!\\d)", " ")             // Periods(not surrounded by digits) -> whitespace
-                .replaceAll("(?:&lt;)([^&gt;])*", "")                   // Content of HTML tags
                 .replaceAll("(&#xA;)", " ")                             // Newline -> whitespace
                 .replaceAll("(?i)&([a-z\\d]+|#\\d+|#x[a-f\\d]+);","")   // HTML tags
                 .replaceAll("((https*://|w{3}\\.)[^\\s]+)","")          // Links
                 .replaceAll("(\\w:/*\\*[^\\s]+)","")                    // Filepaths
                 .replaceAll("(\\s')|'(?!\\w)","")                       // Apostrophs that are _not_ inside a word
-                .replaceAll("([^\\w.'\\s])","");                        // Symbols
+                .replaceAll("([^\\w\\-.'\\s])","");                     // Symbols that are not - . ' whitespace or words
     }
 
     public static boolean isInteger(String str) {
