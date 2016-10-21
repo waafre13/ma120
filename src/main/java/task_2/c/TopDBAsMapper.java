@@ -15,7 +15,6 @@ class TopDBAsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String text = value.toString();
 
-        //TODO: Check if String is integer first?
         int rep = Integer.parseInt(Util.getAttrContent("Reputation", text));
         String name = Util.getAttrContent("DisplayName", text);
 

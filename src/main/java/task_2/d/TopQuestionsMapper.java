@@ -19,7 +19,6 @@ class TopQuestionsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         if(postTypeId == 1){
             String title = Util.getAttrContent("Title", text);
 
-            //TODO: Check if string is integer first?
             int score = Integer.parseInt(Util.getAttrContent("Score", text));
             context.write(new Text(title), new IntWritable(score));
         }
