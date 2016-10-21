@@ -21,11 +21,11 @@ class UniqueWordsMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         if (postTypeId.equals("1") && !title.equals("")) {
 
             // Simple/lazy wordsplit
-            String[] words = title.split("\\W+");
+            String[] words = title.split("\\s+");
 
             // Write words to context
             for (String word : words) {
-                context.write(new Text(word), new IntWritable(1));
+                context.write(new Text(word.toLowerCase()), new IntWritable(1));
             }
         }
     }

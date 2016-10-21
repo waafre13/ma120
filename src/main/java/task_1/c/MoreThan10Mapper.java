@@ -20,7 +20,7 @@ class MoreThan10Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         // Check PostTypeId and if body is not an empty string
         if (postTypeId.equals("1") && !title.equals("")) {
             // Simple/lazy wordsplit
-            String[] words = title.split("\\W+");
+            String[] words = title.split("\\s+");
 
             // Write title to context if it has more than 10 words in it.
             if (words.length > 10) {

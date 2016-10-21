@@ -14,7 +14,7 @@ class NamesMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String text = value.toString();
 
-        String[] names = (Util.getAttrContent("DisplayName", text)).split("\\s");
+        String[] names = (Util.getAttrContent("DisplayName", text)).split("\\s+");
 
         for (String name : names) {
             context.write(new Text(name), new IntWritable(1));

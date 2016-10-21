@@ -3,9 +3,6 @@ package common;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Fredric on 17/10/2016.
- */
 public class Util {
 
     // Returns attribute content for multiple attributes in an array
@@ -23,15 +20,34 @@ public class Util {
 
     // Returns attribute content for a single attribute
     public static String getAttrContent(String attrName, String text){
+        return getAttrContent(attrName, text, false);
+    }
+
+    public static String getAttrContent(String attrName, String text, Boolean removeTagContent){
 
         String regex = "(?:"+attrName+"=\")([^\"]+)";
         Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(text);
-        return match.find() ? removeHTMLTags(match.group(1)) : "";
+        if(match.find()){
+            String string = match.group(1);
+            if(removeTagContent){
+                string.replaceAll("(?:&lt;)([^&gt;])*", "");
+            }
+            return cleanString(string);                // Content of HTML tags) : "";
+        } else{
+            return "";
+        }
     }
 
-    public static String removeHTMLTags(String string){
-        return string.replaceAll("(?i)&(?:[a-z\\d]+|#\\d+|#x[a-f\\d]+);"," ");
+    public static String cleanString(String string){
+        return string
+                .replaceAll("(?=[^\\d])?(\\.)(?!\\d)", " ")             // Periods(not surrounded by digits) -> whitespace
+                .replaceAll("(&#xA;)", " ")                             // Newline -> whitespace
+                .replaceAll("(?i)&([a-z\\d]+|#\\d+|#x[a-f\\d]+);","")   // HTML tags
+                .replaceAll("((https*://|w{3}\\.)[^\\s]+)","")          // Links
+                .replaceAll("(\\w:/*\\*[^\\s]+)","")                    // Filepaths
+                .replaceAll("(\\s')|'(?!\\w)","")                       // Apostrophs that are _not_ inside a word
+                .replaceAll("([^\\w\\-.'\\s])","");                     // Symbols that are not - . ' whitespace or words
     }
 
     public static boolean isInteger(String str) {
@@ -57,68 +73,5 @@ public class Util {
         }
         return true;
     }
-
-    /*
-    public class KeyValueArray{
-
-        private int[] keyArray = new int[];
-        private String[] valArray = new String[];
-
-        public KeyValueArray()
-        {
-        }
-
-        public KeyValueArray(int[] key, String[] val){
-            keyArray = key;
-            valArray = val;
-        }
-
-        public int[] getKeyArray(){
-            return keyArray;
-        }
-
-        public String[] getValArray(){
-            return valArray;
-        }
-
-        public void sortArraysByKey(){
-
-            // Sort by reputation, descending
-            for (int i = 0; i < keyArray.length; i++){
-                for (int j = 0; j < keyArray.length; j++){
-                    if(keyArray[i] > keyArray[j]){
-
-                        int tempKey = keyArray[j];
-                        keyArray[j] = keyArray[i];
-                        keyArray[i] = tempKey;
-
-                        String tempVal = valArray[j];
-                        valArray[j] = valArray[i];
-                        valArray[i] = tempVal;
-                    }
-                }
-            }
-        }
-
-        public void sortArraysByValue(){
-
-            // Sort by reputation, descending
-            for (int i = 0; i < valArray.length; i++){
-                for (int j = 0; j < valArray.length; j++){
-                    if(valArray[i] > valArray[j]){
-
-                        int tempKey = valArray[j];
-                        valArray[j] = valArray[i];
-                        valArray[i] = tempKey;
-
-                        String tempVal = keyArray[j];
-                        keyArray[j] = keyArray[i];
-                        keyArray[i] = tempVal;
-                    }
-                }
-            }
-
-        }
-    }*/
 }
 

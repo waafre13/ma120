@@ -18,14 +18,14 @@ class TrigramMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
         // Filter questions
         if(postTypeId.equals("1")){
-            String[] words = Util.getAttrContent("Title", text).split("\\s");
+            String[] words = Util.getAttrContent("Title", text).split("\\s+");
 
             String prevWord = "";
             String prevPrevWord = "";
             for (String word: words) {
                 if(!prevWord.equals("") && !prevPrevWord.equals("")){
                     String trigram = prevPrevWord+" "+prevWord+" "+word;
-                    context.write(new Text(trigram), new IntWritable(1));
+                    context.write(new Text(trigram.toLowerCase()), new IntWritable(1));
                 }
                 prevPrevWord = prevWord;
                 prevWord = word;

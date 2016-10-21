@@ -14,17 +14,17 @@ class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         String text = value.toString();
 
         // Get value of "Body" and "PostTypeId"
-        String body = Util.getAttrContent("Body", text);
+        String body = Util.getAttrContent("Body", text, true);
         String postTypeId = Util.getAttrContent("PostTypeId", text);
 
         // Check PostTypeId and if body is not an empty string
         if (postTypeId.equals("1") && !body.equals("")) {
             // Simple/lazy wordsplit
-            String[] words = body.split("\\W+");
+            String[] words = body.split("\\s+");
 
             // Write words to context
             for (String word : words) {
-                context.write(new Text(word), new IntWritable(1));
+                context.write(new Text(word.toLowerCase()), new IntWritable(1));
             }
         }
     }

@@ -23,7 +23,6 @@ the output of this task as to popular words.
 
 NOTE TO SELF:
 "PostTypeId" for Q's = 1.
-a) was not about titles, it was about body. I'm confused, how is this about a?
 */
 
 
