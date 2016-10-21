@@ -31,7 +31,17 @@ public class Util {
     }
 
     public static String removeHTMLTags(String string){
-        return string.replaceAll("(?i)&(?:[a-z\\d]+|#\\d+|#x[a-f\\d]+);"," ");
+        return string
+                .replaceAll("\\s\\W+\\s", "")
+                //.replaceAll("\\n", " ")
+                .replaceAll("(?:&lt;)([^&gt;])*", "")
+                .replaceAll("(&#xA;)", " ")
+                .replaceAll("(?i)&([a-z\\d]+|#\\d+|#x[a-f\\d]+);","")
+                .replaceAll("((https*://|w{3}\\.)[^\\s]+)","")
+                .replaceAll("(\\w:/*\\*[^\\s]+)","");
+        //.replaceAll("\\s\\d\\s", "");
+
+        // return string.replaceAll("(?i)&(?:[a-z\\d]+|#\\d+|#x[a-f\\d]+);"," ");
     }
 
     public static boolean isInteger(String str) {
