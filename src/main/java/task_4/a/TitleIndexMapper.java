@@ -13,7 +13,7 @@ class TitleIndexMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String text = value.toString();
-        String[] words = Util.getAttrContent("Title", text).split("\\s");
+        String[] words = Util.getAttrContent("Title", text).split("\\W+");
         String rowId = Util.getAttrContent("Id", text);
         int id = Util.isInteger(rowId) ? Integer.parseInt(rowId) : -1;
 
