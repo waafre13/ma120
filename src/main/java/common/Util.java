@@ -32,16 +32,14 @@ public class Util {
 
     public static String removeHTMLTags(String string){
         return string
-                .replaceAll("\\s\\W+\\s", "")
-                //.replaceAll("\\n", " ")
-                .replaceAll("(?:&lt;)([^&gt;])*", "")
-                .replaceAll("(&#xA;)", " ")
-                .replaceAll("(?i)&([a-z\\d]+|#\\d+|#x[a-f\\d]+);","")
-                .replaceAll("((https*://|w{3}\\.)[^\\s]+)","")
-                .replaceAll("(\\w:/*\\*[^\\s]+)","");
-        //.replaceAll("\\s\\d\\s", "");
-
-        // return string.replaceAll("(?i)&(?:[a-z\\d]+|#\\d+|#x[a-f\\d]+);"," ");
+                .replaceAll("(?=[^\\d])?(\\.)(?!\\d)", " ")             // Periods(not surrounded by digits) -> whitespace
+                .replaceAll("(?:&lt;)([^&gt;])*", "")                   // Content of HTML tags
+                .replaceAll("(&#xA;)", " ")                             // Newline -> whitespace
+                .replaceAll("(?i)&([a-z\\d]+|#\\d+|#x[a-f\\d]+);","")   // HTML tags
+                .replaceAll("((https*://|w{3}\\.)[^\\s]+)","")          // Links
+                .replaceAll("(\\w:/*\\*[^\\s]+)","")                    // Filepaths
+                .replaceAll("(\\s')|'(?!\\w)","")                       // Apostrophs that are _not_ inside a word
+                .replaceAll("([^\\w.'\\s])","");                        // Symbols
     }
 
     public static boolean isInteger(String str) {
