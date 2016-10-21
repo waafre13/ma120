@@ -16,6 +16,6 @@ class CountriesMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
         String location = Util.getAttrContent("Location", text);
 
-        context.write(new Text(location), new IntWritable(1));
+        context.write(new Text(location.toLowerCase()), new IntWritable(1));
     }
 }
