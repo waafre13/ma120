@@ -1,4 +1,4 @@
-package task_2.a;
+package task_2.b;
 
 import common.Util;
 import org.apache.hadoop.io.IntWritable;
@@ -11,7 +11,9 @@ import java.io.IOException;
 class UniqueUsersMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-
-        context.write(new Text(value), new IntWritable(1));
+        String id = Util.getAttrContent("AccountId", value.toString());
+        if (Util.isInteger(id)){
+            context.write(new Text(id), new IntWritable(1));
+        }
     }
 }

@@ -1,4 +1,4 @@
-package task_2.a;
+package task_2.b;
 
 import common.XmlInputFormat;
 import org.apache.hadoop.conf.Configuration;
@@ -16,7 +16,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 users in the dataset.
 
 -----
-hadoop jar ma120/hadoop-xml-reader/target/hadoop-custom_recordreader-1.0-SNAPSHOT.jar task_2.a.UniqueUsers stackexchange/Users.xml task_2b
+hadoop jar ma120/hadoop-xml-reader/target/hadoop-custom_recordreader-1.0-SNAPSHOT.jar task_2.a.Counting stackexchange/Users.xml task_2b
 =====
 Amount of unique users: 	83317
 -----
